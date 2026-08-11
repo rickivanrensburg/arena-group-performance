@@ -3,190 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arena Group &mdash; Group Performance</title>
+<title>Arena Group &mdash; Executive Performance</title>
 <style>
   :root{
-    --ink:#0a0a0a;
-    --white:#ffffff;
-    --paper:#f4f4f4;
-    --line:#e3e3e3;
-    --line2:#efefec;
-    --grey:#6b6b6b;
-    --grey-light:#9b9b9b;
-    --accent:#4a4ea0;
-    --accent-soft:#eceefa;
-    --good:#1e7d46;
-    --good-soft:#e8f4ec;
-    --warn:#8a6d1f;
-    --warn-soft:#fbf5e3;
-    --alert:#b3261e;
-    --alert-soft:#fbeae9;
+    --ink:#0a0a0a; --white:#fff; --paper:#f4f4f4; --line:#e3e3e3; --line2:#efefec;
+    --grey:#6b6b6b; --grey-light:#9b9b9b;
+    --accent:#4a4ea0; --accent-soft:#eceefa;
+    --good:#1e7d46; --good-soft:#e8f4ec;
+    --warn:#8a6d1f; --warn-soft:#fbf5e3;
+    --alert:#b3261e; --alert-soft:#fbeae9;
   }
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0;background:var(--paper);color:var(--ink);
-    font:15px/1.55 -apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font:15px/1.55 -apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
   button{font-family:inherit;cursor:pointer}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px 80px}
 
-  .wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
+  .demobar{background:var(--warn-soft);border-bottom:1px solid #e8dcb8;padding:9px 20px;text-align:center;
+    font-size:11.5px;font-weight:700;letter-spacing:.4px;color:var(--warn);text-transform:uppercase}
 
-  .demobar{
-    background:var(--warn-soft);border-bottom:1px solid #e8dcb8;
-    padding:9px 20px;text-align:center;
-    font-size:11.5px;font-weight:700;letter-spacing:.4px;color:var(--warn);
-    text-transform:uppercase;
-  }
-
-  .mast{padding:34px 0 24px;border-bottom:1px solid var(--line)}
-  .eyebrow{
-    font-size:10.5px;letter-spacing:2.6px;text-transform:uppercase;
-    color:var(--accent);font-weight:800;margin:0 0 10px;
-  }
-  .mast h1{margin:0;font-size:34px;font-weight:800;letter-spacing:-1.4px;line-height:1.02}
+  .mast{padding:32px 0 22px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:10.5px;letter-spacing:2.6px;text-transform:uppercase;color:var(--accent);font-weight:800;margin:0 0 10px}
+  .mast h1{margin:0;font-size:32px;font-weight:800;letter-spacing:-1.3px;line-height:1.05}
   .mast .sub{color:var(--grey);font-size:14px;margin-top:9px}
 
-  .ask{
-    margin:22px 0 0;background:var(--white);border:1px solid var(--line);
-    border-radius:12px;padding:16px 18px;
-  }
-  .ask .lbl{
-    font-size:10px;letter-spacing:1.6px;text-transform:uppercase;
-    color:var(--grey-light);font-weight:800;margin-bottom:11px;
-  }
-  .ask .field{
-    display:flex;align-items:center;gap:11px;
-    border:1px solid var(--line);border-radius:9px;padding:11px 13px;background:var(--paper);
-  }
-  .ask .caret{width:7px;height:17px;background:var(--accent);flex:none;animation:blink 1.1s steps(1) infinite}
-  @keyframes blink{50%{opacity:0}}
-  @media (prefers-reduced-motion:reduce){.ask .caret{animation:none}}
-  .ask .q{font-size:14.5px;color:var(--ink);font-weight:500}
-  .ask .ans{
-    margin-top:12px;padding-top:12px;border-top:1px solid var(--line2);
-    font-size:13.5px;color:var(--grey);line-height:1.6;
-  }
-  .ask .ans strong{color:var(--ink);font-weight:700}
-
-  .controls{display:flex;gap:22px;flex-wrap:wrap;margin:26px 0 20px;align-items:flex-end}
-  .ctl .clbl{
-    font-size:10px;letter-spacing:1.4px;text-transform:uppercase;
-    color:var(--grey-light);font-weight:800;margin-bottom:8px;
-  }
+  .controls{display:flex;gap:24px;flex-wrap:wrap;margin:24px 0 8px;align-items:flex-end}
+  .clbl{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--grey-light);font-weight:800;margin-bottom:8px}
   .tabs{display:flex;gap:5px;flex-wrap:wrap}
-  .tabs button{
-    background:var(--white);border:1px solid var(--line);color:var(--grey);
-    padding:7px 13px;border-radius:8px;font-size:13px;font-weight:600;transition:.12s;
-  }
-  .tabs button:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
+  .tabs button{background:var(--white);border:1px solid var(--line);color:var(--grey);
+    padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600}
   .tabs button.on{background:var(--ink);border-color:var(--ink);color:#fff}
-  .tabs button:disabled{
-    background:transparent;color:var(--grey-light);border-style:dashed;cursor:not-allowed;
-  }
-  .tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .tabs button:disabled{background:transparent;color:var(--grey-light);border-style:dashed;cursor:not-allowed}
+  .periodnote{font-size:11.5px;color:var(--grey-light);font-weight:600;margin:12px 0 0}
 
-  .stats{
-    display:grid;grid-template-columns:repeat(5,1fr);gap:1px;
-    background:var(--line);border:1px solid var(--line);border-radius:12px;
-    overflow:hidden;margin-bottom:16px;
-  }
-  .stat{background:var(--white);padding:19px 18px 16px}
-  .stat .num{font-size:28px;font-weight:800;letter-spacing:-1.3px;line-height:1}
+  .sechead{margin:34px 0 14px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .secnum{font-size:10px;font-weight:800;letter-spacing:1.2px;color:var(--accent);
+    background:var(--accent-soft);padding:4px 8px;border-radius:5px}
+  .sechead h2{margin:0;font-size:19px;font-weight:800;letter-spacing:-.6px}
+  .sechead .qq{font-size:13.5px;color:var(--grey);font-weight:500}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .stat{background:var(--white);padding:19px 18px 17px}
+  .stat .num{font-size:27px;font-weight:800;letter-spacing:-1.2px;line-height:1}
   .stat .num.a{color:var(--accent)}
-  .stat .num.g{color:var(--good)}
-  .stat .unit{font-size:15px;font-weight:700;letter-spacing:-.3px;color:var(--grey)}
-  .stat .lbl{
-    font-size:9.5px;letter-spacing:.9px;text-transform:uppercase;
-    color:var(--grey-light);font-weight:800;margin-top:10px;
-  }
-  .stat .delta{font-size:11.5px;font-weight:700;margin-top:6px;color:var(--good)}
-  .stat .delta.dn{color:var(--alert)}
+  .stat .unit{font-size:14px;font-weight:700;color:var(--grey);letter-spacing:-.2px}
+  .stat .lbl{font-size:9.5px;letter-spacing:.9px;text-transform:uppercase;color:var(--grey-light);font-weight:800;margin-top:10px}
+  .stat .delta{font-size:11.5px;font-weight:700;margin-top:7px}
+  .up{color:var(--good)} .dn{color:var(--alert)}
 
-  .panel{
-    background:var(--white);border:1px solid var(--line);border-radius:12px;
-    padding:20px 22px;margin-bottom:16px;
-  }
+  .panel{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:16px}
   .panel .ph{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:16px}
-  .panel h2{margin:0;font-size:15.5px;font-weight:800;letter-spacing:-.3px}
+  .panel h3{margin:0;font-size:14.5px;font-weight:800;letter-spacing:-.3px}
   .panel .note{font-size:11.5px;color:var(--grey-light);font-weight:600}
   .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;align-items:start}
-  .cols > .panel{margin-bottom:0;height:100%}
+  .cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;align-items:start}
+  .cols>.panel,.cols3>.panel{margin-bottom:0;height:100%}
 
-  .chart{display:flex;align-items:flex-end;gap:10px;height:170px;padding-top:6px}
-  .bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;gap:7px}
-  .bar .col{
-    width:100%;background:var(--accent-soft);border-radius:5px 5px 0 0;
-    border-top:3px solid var(--accent);transition:.2s;position:relative;
-  }
-  .bar.now .col{background:var(--accent);border-top-color:var(--ink)}
-  .bar .v{font-size:11.5px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
-  .bar .m{
-    font-size:10px;letter-spacing:.7px;text-transform:uppercase;
-    color:var(--grey-light);font-weight:800;
-  }
-  .bar.now .m{color:var(--ink)}
+  .chart{display:flex;align-items:flex-end;gap:9px;height:180px;padding-top:4px}
+  .bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;gap:6px}
+  .pair{width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;gap:3px}
+  .pair .act{width:52%;background:var(--accent-soft);border-top:3px solid var(--accent);border-radius:4px 4px 0 0}
+  .pair .bud{width:26%;background:transparent;border:1px dashed var(--grey-light);border-bottom:none;border-radius:4px 4px 0 0}
+  .bar.on .act{background:var(--accent);border-top-color:var(--ink)}
+  .bar .v{font-size:11px;font-weight:800;font-variant-numeric:tabular-nums}
+  .bar .m{font-size:10px;letter-spacing:.7px;text-transform:uppercase;color:var(--grey-light);font-weight:800}
+  .bar.on .m{color:var(--ink)}
+  .legend{display:flex;gap:16px;margin-top:14px;font-size:11.5px;color:var(--grey);font-weight:600;flex-wrap:wrap}
+  .key{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  .key.act{background:var(--accent)}
+  .key.bud{border:1px dashed var(--grey-light)}
 
-  .vrow{padding:14px 0;border-bottom:1px solid var(--line2)}
+  .spark{display:flex;align-items:flex-end;gap:5px;height:52px;margin-top:4px}
+  .spark div{flex:1;background:var(--accent-soft);border-top:2px solid var(--accent);border-radius:3px 3px 0 0}
+  .spark div.on{background:var(--accent);border-top-color:var(--ink)}
+  .sparkrow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px;padding-top:18px;border-top:1px solid var(--line2)}
+  .sparkrow .st{font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--grey-light)}
+  .sparkrow .sv{font-size:20px;font-weight:800;letter-spacing:-.8px;margin-top:5px}
+
+  .vrow{padding:12px 0;border-bottom:1px solid var(--line2)}
   .vrow:first-child{padding-top:0}
   .vrow:last-child{border-bottom:none;padding-bottom:2px}
-  .vtop{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px}
-  .vname{font-size:14px;font-weight:800;letter-spacing:-.2px}
+  .vtop{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:7px}
+  .vname{font-size:13.5px;font-weight:800;letter-spacing:-.2px}
   .vmeta{font-size:12px;color:var(--grey);font-variant-numeric:tabular-nums}
   .track{height:7px;background:var(--paper);border-radius:4px;overflow:hidden}
   .fill{height:100%;background:var(--accent);border-radius:4px}
+  .fill.g{background:var(--good)}
 
-  .tscroll{overflow-x:auto;margin:0 -22px;padding:0 22px}
-  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:640px}
-  th{
-    text-align:left;color:var(--grey-light);font-weight:800;font-size:9.5px;
-    text-transform:uppercase;letter-spacing:.8px;padding:0 12px 11px;
-    border-bottom:1px solid var(--line);white-space:nowrap;
-  }
-  td{padding:13px 12px;border-bottom:1px solid var(--line2);vertical-align:middle}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{text-align:left;color:var(--grey-light);font-weight:800;font-size:9.5px;text-transform:uppercase;
+    letter-spacing:.8px;padding:0 10px 11px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:12px 10px;border-bottom:1px solid var(--line2)}
   tbody tr:last-child td{border-bottom:none}
+  th:first-child,td:first-child{padding-left:0}
   th.r,td.r{text-align:right;font-variant-numeric:tabular-nums}
   td .t1{font-weight:700;letter-spacing:-.15px}
   td .t2{color:var(--grey);font-size:12px;margin-top:3px}
-
-  .badge{
-    display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.6px;
-    text-transform:uppercase;padding:3px 8px;border-radius:5px;white-space:nowrap;
-    background:var(--accent-soft);color:var(--accent);
-  }
+  .badge{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;
+    padding:3px 8px;border-radius:5px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
   .badge.g{background:var(--good-soft);color:var(--good)}
   .badge.w{background:var(--warn-soft);color:var(--warn)}
 
-  .comgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .comgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:10px;overflow:hidden}
   .com{background:var(--white);padding:15px 16px;display:flex;flex-direction:column}
-  .com .cn{font-size:12.5px;font-weight:700;letter-spacing:-.1px;line-height:1.3;min-height:2.6em}
-  .com .cv{font-size:21px;font-weight:800;letter-spacing:-.9px;margin-top:6px;color:var(--accent);line-height:1}
+  .com .cn{font-size:12.5px;font-weight:700;line-height:1.3;min-height:2.6em}
+  .com .cv{font-size:20px;font-weight:800;letter-spacing:-.8px;margin-top:6px;color:var(--accent);line-height:1}
   .com .cu{font-size:10.5px;color:var(--grey-light);font-weight:700;margin-top:6px;text-transform:uppercase;letter-spacing:.6px}
+
+  details.ops{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:0;margin-top:8px}
+  details.ops summary{padding:17px 22px;font-size:14px;font-weight:800;letter-spacing:-.2px;cursor:pointer;list-style:none}
+  details.ops summary::-webkit-details-marker{display:none}
+  details.ops summary:after{content:"  +";color:var(--accent);font-weight:800}
+  details.ops[open] summary:after{content:"  \2212"}
+  details.ops .inner{padding:0 22px 22px}
+  details.ops .opsnote{font-size:12px;color:var(--grey);margin:0 0 16px}
 
   .foot{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);color:var(--grey-light);font-size:11.5px;line-height:1.7}
   .foot strong{color:var(--grey);font-weight:700}
 
-  @media (max-width:820px){
+  @media (max-width:900px){
     .stats{grid-template-columns:repeat(2,1fr)}
-    .stats .stat:last-child{grid-column:1 / -1}
-    .cols{grid-template-columns:1fr}
+    .cols,.cols3{grid-template-columns:1fr}
     .comgrid{grid-template-columns:repeat(2,1fr)}
-    .mast h1{font-size:27px}
-    .chart{height:140px;gap:6px}
+    .mast h1{font-size:26px}
+    .chart{height:150px;gap:5px}
   }
   @media (max-width:480px){
     .wrap{padding:0 14px 60px}
     .stats{grid-template-columns:1fr}
-    .stats .stat:last-child{grid-column:auto}
     .comgrid{grid-template-columns:1fr}
     .com .cn{min-height:0}
     .panel{padding:17px 16px}
-    .tscroll{margin:0;padding:0;overflow-x:visible}
-    table{min-width:0;font-size:13px}
+    details.ops summary{padding:16px}
+    details.ops .inner{padding:0 16px 16px}
+    .chart{gap:3px;height:130px}
+    .bar .v{font-size:9.5px}
+    .sparkrow{grid-template-columns:1fr}
+    table{font-size:12.5px}
     th:nth-child(2),td:nth-child(2){display:none}
-    th,td{padding-left:0;padding-right:0}
-    th:not(:first-child),td:not(:first-child){padding-left:10px}
   }
 </style>
 </head>
@@ -197,144 +153,159 @@
 <div class="wrap">
 
   <header class="mast">
-    <p class="eyebrow">Arena OS &nbsp;&middot;&nbsp; Group Performance</p>
-    <h1>How much did we build last month</h1>
-    <p class="sub">One view of every project delivered, what it took, and what it returned. Updated automatically. No one has to be asked.</p>
+    <p class="eyebrow">Arena OS &nbsp;&middot;&nbsp; Executive Performance</p>
+    <h1>Arena Group at a glance</h1>
+    <p class="sub">Trading performance against budget, where revenue is coming from, and what is already secured. All figures in US dollars.</p>
   </header>
 
-  <section class="ask">
-    <div class="lbl">Ask Arena</div>
-    <div class="field">
-      <span class="caret" aria-hidden="true"></span>
-      <span class="q" id="q">How much did we deploy at Abu Dhabi Grand Prix this year?</span>
-    </div>
-    <div class="ans" id="a"><strong>14,200 sqm</strong> across Modular and Seating, 22,400 seats installed, delivered over 19 days by a peak crew of 84.</div>
-  </section>
-
   <div class="controls">
-    <div class="ctl">
-      <div class="clbl">Region</div>
+    <div>
+      <div class="clbl">View</div>
       <div class="tabs" id="regions">
-        <button class="on" data-region="uae">UAE</button>
-        <button data-region="ksa">Saudi Arabia</button>
-        <button disabled title="Not connected">UK</button>
-        <button disabled title="Not connected">Americas</button>
-        <button disabled title="Not connected">APAC</button>
+        <button class="on" data-k="group">Group</button>
+        <button data-k="emea">EMEA</button>
+        <button data-k="amer">Americas</button>
+        <button data-k="apac">APAC</button>
       </div>
     </div>
-    <div class="ctl">
+    <div>
       <div class="clbl">Period</div>
-      <div class="tabs" id="months">
-        <button data-month="may">May</button>
-        <button data-month="jun">June</button>
-        <button class="on" data-month="jul">July</button>
+      <div class="tabs" id="periods">
+        <button class="on" data-k="m">Month</button>
+        <button data-k="q">Quarter</button>
+        <button data-k="y">Year to date</button>
       </div>
     </div>
   </div>
+  <p class="periodnote" id="periodnote">July 2026 &nbsp;&middot;&nbsp; Group &nbsp;&middot;&nbsp; financial year January to December</p>
 
+  <div class="sechead">
+    <span class="secnum">01</span>
+    <h2>Executive summary</h2>
+    <span class="qq">How are we performing?</span>
+  </div>
   <section class="stats">
-    <div class="stat">
-      <div class="num" id="s-events">23</div>
-      <div class="lbl">Projects delivered</div>
-      <div class="delta" id="d-events">+4 on June</div>
-    </div>
-    <div class="stat">
-      <div class="num a" id="s-sqm">41,800</div>
-      <div class="lbl">Square metres deployed</div>
-      <div class="delta" id="d-sqm">+11% on June</div>
-    </div>
-    <div class="stat">
-      <div class="num"><span class="unit">AED</span> <span id="s-rev">18.4m</span></div>
-      <div class="lbl">Revenue</div>
-      <div class="delta" id="d-rev">+9% on June</div>
-    </div>
-    <div class="stat">
-      <div class="num"><span class="unit">AED</span> <span id="s-cost">13.1m</span></div>
-      <div class="lbl">Delivered cost</div>
-      <div class="delta dn" id="d-cost">+13% on June</div>
-    </div>
-    <div class="stat">
-      <div class="num g" id="s-marg">28.8%</div>
-      <div class="lbl">Gross margin</div>
-      <div class="delta dn" id="d-marg">down 2.4 pts</div>
-    </div>
+    <div class="stat"><div class="num"><span class="unit">$</span><span id="k-rev">52.4m</span></div><div class="lbl">Revenue</div><div class="delta up" id="k-revd">+8.1% on prior month</div></div>
+    <div class="stat"><div class="num a" id="k-revb">+1.0%</div><div class="lbl">Revenue vs budget</div><div class="delta up" id="k-revbd">$0.5m ahead of plan</div></div>
+    <div class="stat"><div class="num" id="k-gm">27.8%</div><div class="lbl">Gross margin</div><div class="delta dn" id="k-gmd">down 1.0 pts on prior month</div></div>
+    <div class="stat"><div class="num a" id="k-gmb">+0.2 pts</div><div class="lbl">Margin vs budget</div><div class="delta up" id="k-gmbd">ahead of plan</div></div>
+    <div class="stat"><div class="num"><span class="unit">$</span><span id="k-eb">7.7m</span></div><div class="lbl">EBITDA</div><div class="delta up" id="k-ebd">14.7% of revenue</div></div>
+    <div class="stat"><div class="num" id="k-proj">61</div><div class="lbl">Projects delivered</div><div class="delta up" id="k-projd">+6 on prior month</div></div>
   </section>
 
+  <div class="sechead">
+    <span class="secnum">02</span>
+    <h2>Performance trends</h2>
+    <span class="qq">Are we improving?</span>
+  </div>
   <section class="panel">
-    <div class="ph">
-      <h2>Square metres deployed</h2>
-      <span class="note">Rolling five months</span>
-    </div>
+    <div class="ph"><h3>Revenue against budget</h3><span class="note">US$ millions by month</span></div>
     <div class="chart" id="chart">
-      <div class="bar"><span class="v">29.1k</span><div class="col" style="height:70%"></div><span class="m">Mar</span></div>
-      <div class="bar"><span class="v">31.2k</span><div class="col" style="height:75%"></div><span class="m">Apr</span></div>
-      <div class="bar"><span class="v">33.1k</span><div class="col" style="height:79%"></div><span class="m">May</span></div>
-      <div class="bar"><span class="v">37.6k</span><div class="col" style="height:90%"></div><span class="m">Jun</span></div>
-      <div class="bar now"><span class="v">41.8k</span><div class="col" style="height:100%"></div><span class="m">Jul</span></div>
+      <div class="bar"><span class="v">44.0</span><div class="pair"><div class="act" style="height:84%"></div><div class="bud" style="height:80%"></div></div><span class="m">Jan</span></div>
+      <div class="bar"><span class="v">46.2</span><div class="pair"><div class="act" style="height:88%"></div><div class="bud" style="height:86%"></div></div><span class="m">Feb</span></div>
+      <div class="bar"><span class="v">50.5</span><div class="pair"><div class="act" style="height:96%"></div><div class="bud" style="height:90%"></div></div><span class="m">Mar</span></div>
+      <div class="bar"><span class="v">47.6</span><div class="pair"><div class="act" style="height:91%"></div><div class="bud" style="height:94%"></div></div><span class="m">Apr</span></div>
+      <div class="bar"><span class="v">49.1</span><div class="pair"><div class="act" style="height:94%"></div><div class="bud" style="height:96%"></div></div><span class="m">May</span></div>
+      <div class="bar"><span class="v">51.9</span><div class="pair"><div class="act" style="height:99%"></div><div class="bud" style="height:100%"></div></div><span class="m">Jun</span></div>
+      <div class="bar on"><span class="v">52.4</span><div class="pair"><div class="act" style="height:100%"></div><div class="bud" style="height:99%"></div></div><span class="m">Jul</span></div>
+    </div>
+    <div class="legend"><span><span class="key act"></span>Actual</span><span><span class="key bud"></span>Budget</span></div>
+    <div class="sparkrow">
+      <div>
+        <div class="st">Gross margin trend</div>
+        <div class="sv" id="sp-gmv">27.8%</div>
+        <div class="spark" id="sp-gm"></div>
+      </div>
+      <div>
+        <div class="st">EBITDA margin trend</div>
+        <div class="sv" id="sp-ebv">14.7%</div>
+        <div class="spark" id="sp-eb"></div>
+      </div>
     </div>
   </section>
 
-  <div class="cols">
+  <div class="sechead">
+    <span class="secnum">03</span>
+    <h2>Revenue drivers</h2>
+    <span class="qq">Where is the revenue coming from?</span>
+  </div>
+  <div class="cols3">
     <section class="panel">
-      <div class="ph">
-        <h2>By vertical</h2>
-        <span class="note">Share of revenue</span>
-      </div>
-      <div id="verticals">
-        <div class="vrow"><div class="vtop"><span class="vname">Events</span><span class="vmeta">11 projects &middot; AED 6.2m</span></div><div class="track"><div class="fill" style="width:34%"></div></div></div>
-        <div class="vrow"><div class="vtop"><span class="vname">Modular</span><span class="vmeta">4 projects &middot; AED 5.1m</span></div><div class="track"><div class="fill" style="width:28%"></div></div></div>
-        <div class="vrow"><div class="vtop"><span class="vname">Seating</span><span class="vmeta">5 projects &middot; AED 4.8m</span></div><div class="track"><div class="fill" style="width:26%"></div></div></div>
-        <div class="vrow"><div class="vtop"><span class="vname">Maestra</span><span class="vmeta">3 projects &middot; AED 2.3m</span></div><div class="track"><div class="fill" style="width:12%"></div></div></div>
+      <div class="ph"><h3>By vertical</h3><span class="note">Revenue</span></div>
+      <div id="d-vert">
+        <div class="vrow"><div class="vtop"><span class="vname">Events</span><span class="vmeta">$17.8m</span></div><div class="track"><div class="fill" style="width:100%"></div></div></div>
+        <div class="vrow"><div class="vtop"><span class="vname">Modular</span><span class="vmeta">$14.1m</span></div><div class="track"><div class="fill" style="width:79%"></div></div></div>
+        <div class="vrow"><div class="vtop"><span class="vname">Seating</span><span class="vmeta">$12.6m</span></div><div class="track"><div class="fill" style="width:71%"></div></div></div>
+        <div class="vrow"><div class="vtop"><span class="vname">Maestra</span><span class="vmeta">$7.9m</span></div><div class="track"><div class="fill" style="width:44%"></div></div></div>
       </div>
     </section>
-
     <section class="panel">
-      <div class="ph">
-        <h2>Commodities deployed</h2>
-        <span class="note">This period</span>
+      <div class="ph"><h3 id="d-splitlbl">By region</h3><span class="note">Revenue</span></div>
+      <div id="d-split">
+        <div class="vrow"><div class="vtop"><span class="vname">EMEA</span><span class="vmeta">$24.8m</span></div><div class="track"><div class="fill" style="width:100%"></div></div></div>
+        <div class="vrow"><div class="vtop"><span class="vname">Americas</span><span class="vmeta">$18.2m</span></div><div class="track"><div class="fill" style="width:73%"></div></div></div>
+        <div class="vrow"><div class="vtop"><span class="vname">APAC</span><span class="vmeta">$9.4m</span></div><div class="track"><div class="fill" style="width:38%"></div></div></div>
       </div>
-      <div class="comgrid" id="commodities">
-        <div class="com"><div class="cn">Temporary seats</div><div class="cv">14,200</div><div class="cu">installed</div></div>
-        <div class="com"><div class="cn">Clearspan structures</div><div class="cv">24,700</div><div class="cu">sqm</div></div>
-        <div class="com"><div class="cn">Double decker</div><div class="cv">3,900</div><div class="cu">sqm</div></div>
-        <div class="com"><div class="cn">Event flooring</div><div class="cv">28,100</div><div class="cu">sqm</div></div>
-        <div class="com"><div class="cn">Cabins and units</div><div class="cv">91</div><div class="cu">deployed</div></div>
-        <div class="com"><div class="cn">Truck movements</div><div class="cv">243</div><div class="cu">logged</div></div>
+    </section>
+    <section class="panel">
+      <div class="ph"><h3>Margin by vertical</h3><span class="note">Gross</span></div>
+      <div id="d-marg">
+        <div class="vrow"><div class="vtop"><span class="vname">Modular</span><span class="vmeta">31.2%</span></div><div class="track"><div class="fill g" style="width:100%"></div></div></div>
+        <div class="vrow"><div class="vtop"><span class="vname">Maestra</span><span class="vmeta">29.6%</span></div><div class="track"><div class="fill g" style="width:95%"></div></div></div>
+        <div class="vrow"><div class="vtop"><span class="vname">Events</span><span class="vmeta">26.4%</span></div><div class="track"><div class="fill g" style="width:85%"></div></div></div>
+        <div class="vrow"><div class="vtop"><span class="vname">Seating</span><span class="vmeta">24.8%</span></div><div class="track"><div class="fill g" style="width:79%"></div></div></div>
       </div>
     </section>
   </div>
-
-  <section class="panel" id="projpanel">
-    <div class="ph">
-      <h2>Projects this period</h2>
-      <span class="note">Ranked by revenue</span>
-    </div>
-    <div class="tscroll">
-      <table>
-        <thead>
-          <tr>
-            <th>Project</th>
-            <th>Vertical</th>
-            <th class="r">Sqm</th>
-            <th class="r">Revenue</th>
-            <th class="r">Margin</th>
-          </tr>
-        </thead>
-        <tbody id="projects">
-          <tr><td><div class="t1">Abu Dhabi Grand Prix build</div><div class="t2">Grandstands and hospitality decks</div></td><td><span class="badge">Modular</span></td><td class="r">14,200</td><td class="r">AED 4.6m</td><td class="r"><span class="badge g">27%</span></td></tr>
-          <tr><td><div class="t1">Dubai World Cup hospitality</div><div class="t2">Racecourse, Meydan</div></td><td><span class="badge">Events</span></td><td class="r">5,800</td><td class="r">AED 2.1m</td><td class="r"><span class="badge g">31%</span></td></tr>
-          <tr><td><div class="t1">Expo City conference village</div><div class="t2">Six-week modular build</div></td><td><span class="badge">Modular</span></td><td class="r">6,400</td><td class="r">AED 1.9m</td><td class="r"><span class="badge g">29%</span></td></tr>
-          <tr><td><div class="t1">Global Village season prep</div><div class="t2">Pavilions and walkways</div></td><td><span class="badge">Events</span></td><td class="r">4,900</td><td class="r">AED 1.7m</td><td class="r"><span class="badge w">24%</span></td></tr>
-          <tr><td><div class="t1">Etihad Arena fan zone</div><div class="t2">Yas Island</div></td><td><span class="badge">Maestra</span></td><td class="r">2,900</td><td class="r">AED 1.4m</td><td class="r"><span class="badge w">23%</span></td></tr>
-          <tr><td><div class="t1">Dubai Marathon start village</div><div class="t2">Seating and structures</div></td><td><span class="badge">Seating</span></td><td class="r">3,300</td><td class="r">AED 1.1m</td><td class="r"><span class="badge w">19%</span></td></tr>
-        </tbody>
-      </table>
-    </div>
+  <section class="stats" style="grid-template-columns:repeat(3,1fr)">
+    <div class="stat"><div class="num a" id="k-sqft">1.14m</div><div class="lbl">Square feet delivered</div><div class="delta up" id="k-sqftd">+6.2% on prior month</div></div>
+    <div class="stat"><div class="num" id="k-avg"><span class="unit">$</span>859k</div><div class="lbl">Average project value</div><div class="delta up" id="k-avgd">across projects delivered</div></div>
+    <div class="stat"><div class="num" id="k-rsf"><span class="unit">$</span>45.9</div><div class="lbl">Revenue per square foot</div><div class="delta up" id="k-rsfd">blended across verticals</div></div>
   </section>
+
+  <div class="sechead">
+    <span class="secnum">04</span>
+    <h2>Projects and outlook</h2>
+    <span class="qq">What is driving current and future performance?</span>
+  </div>
+  <section class="stats" style="grid-template-columns:repeat(4,1fr)">
+    <div class="stat"><div class="num a"><span class="unit">$</span><span id="k-ob">186.3m</span></div><div class="lbl">Secured order book</div><div class="delta up" id="k-obd">84% of remaining budget</div></div>
+    <div class="stat"><div class="num"><span class="unit">$</span><span id="k-pipe">214.6m</span></div><div class="lbl">Weighted pipeline</div><div class="delta up" id="k-piped">next twelve months</div></div>
+    <div class="stat"><div class="num"><span class="unit">$</span><span id="k-fc">612.4m</span></div><div class="lbl">Full year forecast</div><div class="delta up" id="k-fcd">+2.4% vs budget</div></div>
+    <div class="stat"><div class="num" id="k-ye">28.0%</div><div class="lbl">Forecast year end margin</div><div class="delta up" id="k-yed">EBITDA $91.5m</div></div>
+  </section>
+  <section class="panel">
+    <div class="ph"><h3>Top projects</h3><span class="note">Ranked by revenue</span></div>
+    <table>
+      <thead><tr><th>Project</th><th>Region</th><th class="r">Revenue</th><th class="r">Margin</th></tr></thead>
+      <tbody id="d-proj">
+        <tr><td><div class="t1">FIFA World Cup 26, Toronto</div><div class="t2">Modular</div></td><td><span class="badge">Americas</span></td><td class="r">$6.9m</td><td class="r"><span class="badge g">31%</span></td></tr>
+        <tr><td><div class="t1">Abu Dhabi Grand Prix</div><div class="t2">Modular</div></td><td><span class="badge">EMEA</span></td><td class="r">$4.6m</td><td class="r"><span class="badge w">27%</span></td></tr>
+        <tr><td><div class="t1">The Open Championship</div><div class="t2">Seating</div></td><td><span class="badge">EMEA</span></td><td class="r">$4.1m</td><td class="r"><span class="badge g">29%</span></td></tr>
+        <tr><td><div class="t1">Riyadh Season</div><div class="t2">Modular</div></td><td><span class="badge">EMEA</span></td><td class="r">$3.4m</td><td class="r"><span class="badge g">30%</span></td></tr>
+        <tr><td><div class="t1">Melbourne Cup Carnival</div><div class="t2">Events</div></td><td><span class="badge">APAC</span></td><td class="r">$2.8m</td><td class="r"><span class="badge g">33%</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <details class="ops">
+    <summary>Operational detail</summary>
+    <div class="inner">
+      <p class="opsnote">Delivery data for operational teams. Not part of the executive view.</p>
+      <div class="comgrid" id="d-com">
+        <div class="com"><div class="cn">Temporary seats</div><div class="cv">108,400</div><div class="cu">installed</div></div>
+        <div class="com"><div class="cn">Clearspan structures</div><div class="cv">486,200</div><div class="cu">sq ft</div></div>
+        <div class="com"><div class="cn">Double decker</div><div class="cv">92,700</div><div class="cu">sq ft</div></div>
+        <div class="com"><div class="cn">Event flooring</div><div class="cv">544,800</div><div class="cu">sq ft</div></div>
+        <div class="com"><div class="cn">Cabins and units</div><div class="cv">417</div><div class="cu">deployed</div></div>
+        <div class="com"><div class="cn">Truck movements</div><div class="cv">1,286</div><div class="cu">logged</div></div>
+      </div>
+    </div>
+  </details>
 
   <div class="foot">
-    <strong>What this is.</strong> A working mockup of the monthly group view, built to show the shape of the answer rather than the answer itself. Every number on this page is invented.<br>
-    <strong>Where the real numbers would come from.</strong> Project records, the finance system, the CRM, and the stock system, read automatically once each month. No account manager is asked for anything.<br>
+    <strong>What this is.</strong> A working mockup of the group executive view, built to show the shape of the answer rather than the answer itself. Every number on this page is invented.<br>
+    <strong>Where the real numbers would come from.</strong> Arena runs four separate finance systems across the three regions, so a single group figure has to be assembled rather than read from one place. That assembly is the work.<br>
     <strong>Prepared by</strong> Ricki van Rensburg, The Triggr Group, for Arena Group.
   </div>
 
@@ -342,189 +313,241 @@
 
 <script>
 (function(){
-  var DATA = {
-    uae: {
-      may: {
-        events:17, sqm:"33,100", rev:"14.9m", cost:"10.7m", marg:"28.2%",
-        d:["+2 on April","+6% on April","+4% on April","+5% on April","up 0.4 pts"],
-        verticals:[["Events",34,"6 projects &middot; AED 5.1m"],["Modular",29,"4 projects &middot; AED 4.3m"],["Seating",25,"4 projects &middot; AED 3.7m"],["Maestra",12,"3 projects &middot; AED 1.8m"]],
-        commodities:[["Temporary seats","11,400","installed"],["Clearspan structures","18,900","sqm"],["Double decker","2,100","sqm"],["Event flooring","21,600","sqm"],["Cabins and units","64","deployed"],["Truck movements","188","logged"]],
-        projects:[
-          ["Dubai World Cup hospitality","Racecourse, Meydan","Events","5,800","AED 2.4m","31%","g"],
-          ["Expo City conference village","Six-week modular build","Modular","6,400","AED 2.2m","29%","g"],
-          ["DIFC Summer Series","Grandstand and hospitality","Seating","3,900","AED 1.6m","26%","g"],
-          ["Al Ain Sports Festival","Temporary seating bowl","Seating","4,100","AED 1.3m","21%","w"],
-          ["Etihad Arena fan zone","Yas Island","Maestra","2,400","AED 1.1m","23%","w"]
-        ]
-      },
-      jun: {
-        events:19, sqm:"37,600", rev:"16.9m", cost:"11.6m", marg:"31.2%",
-        d:["+2 on May","+14% on May","+13% on May","+8% on May","up 3.0 pts"],
-        verticals:[["Modular",33,"5 projects &middot; AED 5.6m"],["Events",30,"7 projects &middot; AED 5.1m"],["Seating",24,"4 projects &middot; AED 4.1m"],["Maestra",13,"3 projects &middot; AED 2.1m"]],
-        commodities:[["Temporary seats","13,800","installed"],["Clearspan structures","22,400","sqm"],["Double decker","3,300","sqm"],["Event flooring","24,900","sqm"],["Cabins and units","78","deployed"],["Truck movements","214","logged"]],
-        projects:[
-          ["Yas Bay waterfront activation","Structures and flooring","Modular","7,900","AED 3.1m","34%","g"],
-          ["Dubai Summer Surprises","Ten mall activations","Events","4,600","AED 2.3m","30%","g"],
-          ["Abu Dhabi corporate campus","Temporary office village","Modular","5,200","AED 2.0m","32%","g"],
-          ["Sharjah Cricket ground","Seating extension","Seating","4,800","AED 1.5m","22%","w"],
-          ["Coca-Cola Arena rigging","Season fit-out","Maestra","1,900","AED 1.2m","25%","g"]
-        ]
-      },
-      jul: {
-        events:23, sqm:"41,800", rev:"18.4m", cost:"13.1m", marg:"28.8%",
-        d:["+4 on June","+11% on June","+9% on June","+13% on June","down 2.4 pts"],
-        verticals:[["Events",34,"11 projects &middot; AED 6.2m"],["Modular",28,"4 projects &middot; AED 5.1m"],["Seating",26,"5 projects &middot; AED 4.8m"],["Maestra",12,"3 projects &middot; AED 2.3m"]],
-        commodities:[["Temporary seats","14,200","installed"],["Clearspan structures","24,700","sqm"],["Double decker","3,900","sqm"],["Event flooring","28,100","sqm"],["Cabins and units","91","deployed"],["Truck movements","243","logged"]],
-        projects:[
-          ["Abu Dhabi Grand Prix build","Grandstands and hospitality decks","Modular","14,200","AED 4.6m","27%","g"],
-          ["Dubai World Cup hospitality","Racecourse, Meydan","Events","5,800","AED 2.1m","31%","g"],
-          ["Expo City conference village","Six-week modular build","Modular","6,400","AED 1.9m","29%","g"],
-          ["Global Village season prep","Pavilions and walkways","Events","4,900","AED 1.7m","24%","w"],
-          ["Etihad Arena fan zone","Yas Island","Maestra","2,900","AED 1.4m","23%","w"],
-          ["Dubai Marathon start village","Seating and structures","Seating","3,300","AED 1.1m","19%","w"]
-        ]
-      }
+  var M = ["Jan","Feb","Mar","Apr","May","Jun","Jul"];
+
+  var R = {
+    group:{
+      name:"Group",
+      h:{ m:{rev:52.4,budRev:51.9,gm:27.8,budGm:27.6,eb:7.7,proj:61,sqft:1.142,pRev:8.1,pGm:-1.0,pProj:6,pSqft:6.2},
+          q:{rev:148.6,budRev:152.0,gm:28.4,budGm:27.9,eb:22.1,proj:174,sqft:3.284,pRev:5.2,pGm:0.6,pProj:11,pSqft:4.1},
+          y:{rev:341.7,budRev:338.2,gm:28.1,budGm:27.8,eb:50.6,proj:402,sqft:7.486,pRev:9.6,pGm:0.4,pProj:38,pSqft:7.3} },
+      act:[44.0,46.2,50.5,47.6,49.1,51.9,52.4],
+      bud:[42.0,45.0,47.3,49.2,50.4,52.4,51.9],
+      gmT:[27.2,27.6,28.0,28.1,28.3,28.8,27.8],
+      ebT:[13.8,14.2,14.6,14.5,14.9,15.4,14.7],
+      vert:[["Events",34],["Modular",27],["Seating",24],["Maestra",15]],
+      vmarg:[["Modular",31.2],["Maestra",29.6],["Events",26.4],["Seating",24.8]],
+      splitLbl:"By region",
+      split:[["EMEA",47.3],["Americas",34.7],["APAC",18.0]],
+      out:{ob:186.3,pipe:214.6,fc:612.4,budFc:598.0,ye:28.0,yeEb:91.5,cover:84},
+      proj:[["FIFA World Cup 26, Toronto","Modular","Americas",6.9,31],
+            ["Abu Dhabi Grand Prix","Modular","EMEA",4.6,27],
+            ["The Open Championship","Seating","EMEA",4.1,29],
+            ["Riyadh Season","Modular","EMEA",3.4,30],
+            ["Melbourne Cup Carnival","Events","APAC",2.8,33]],
+      com:[["Temporary seats","108,400","installed"],["Clearspan structures","486,200","sq ft"],
+           ["Double decker","92,700","sq ft"],["Event flooring","544,800","sq ft"],
+           ["Cabins and units","417","deployed"],["Truck movements","1,286","logged"]]
     },
-    ksa: {
-      may: {
-        events:6, sqm:"19,400", rev:"9.2m", cost:"6.9m", marg:"25.0%",
-        d:["+1 on April","+8% on April","+6% on April","+9% on April","down 1.1 pts"],
-        verticals:[["Modular",44,"3 projects &middot; AED 4.0m"],["Seating",31,"2 projects &middot; AED 2.9m"],["Events",25,"1 project &middot; AED 2.3m"]],
-        commodities:[["Temporary seats","8,600","installed"],["Clearspan structures","13,100","sqm"],["Double decker","1,400","sqm"],["Event flooring","11,800","sqm"],["Cabins and units","52","deployed"],["Truck movements","96","logged"]],
-        projects:[
-          ["Riyadh Season pavilion","Boulevard zone","Modular","8,200","AED 3.4m","27%","g"],
-          ["Jeddah Corniche circuit","Grandstand package","Seating","6,100","AED 2.6m","24%","w"],
-          ["Diriyah heritage festival","Structures and staging","Events","3,300","AED 1.8m","22%","w"]
-        ]
-      },
-      jun: {
-        events:7, sqm:"21,700", rev:"10.1m", cost:"7.4m", marg:"26.7%",
-        d:["+1 on May","+12% on May","+10% on May","+7% on May","up 1.7 pts"],
-        verticals:[["Modular",46,"3 projects &middot; AED 4.6m"],["Seating",30,"2 projects &middot; AED 3.0m"],["Events",24,"2 projects &middot; AED 2.5m"]],
-        commodities:[["Temporary seats","9,400","installed"],["Clearspan structures","14,900","sqm"],["Double decker","1,800","sqm"],["Event flooring","13,200","sqm"],["Cabins and units","58","deployed"],["Truck movements","112","logged"]],
-        projects:[
-          ["Riyadh Season pavilion","Boulevard zone, phase two","Modular","9,100","AED 3.9m","29%","g"],
-          ["King Abdullah Sports City","Seating refit","Seating","6,400","AED 2.7m","25%","g"],
-          ["NEOM contractor village","Modular accommodation","Modular","4,200","AED 2.0m","28%","g"]
-        ]
-      },
-      jul: {
-        events:8, sqm:"23,900", rev:"11.3m", cost:"8.2m", marg:"27.4%",
-        d:["+1 on June","+10% on June","+12% on June","+11% on June","up 0.7 pts"],
-        verticals:[["Modular",48,"4 projects &middot; AED 5.4m"],["Seating",29,"2 projects &middot; AED 3.3m"],["Events",23,"2 projects &middot; AED 2.6m"]],
-        commodities:[["Temporary seats","10,100","installed"],["Clearspan structures","16,300","sqm"],["Double decker","2,200","sqm"],["Event flooring","14,600","sqm"],["Cabins and units","67","deployed"],["Truck movements","131","logged"]],
-        projects:[
-          ["Riyadh Season pavilion","Boulevard zone, phase three","Modular","9,800","AED 4.2m","30%","g"],
-          ["NEOM contractor village","Modular accommodation","Modular","5,600","AED 2.5m","29%","g"],
-          ["Jeddah Corniche circuit","Grandstand package","Seating","6,200","AED 2.6m","24%","w"],
-          ["Diriyah season opening","Structures and staging","Events","2,300","AED 1.2m","21%","w"]
-        ]
-      }
+    emea:{
+      name:"EMEA",
+      h:{ m:{rev:24.8,budRev:23.5,gm:29.4,budGm:28.0,eb:4.1,proj:31,sqft:0.512,pRev:-0.4,pGm:-0.7,pProj:2,pSqft:3.1},
+          q:{rev:71.2,budRev:69.4,gm:29.8,budGm:28.3,eb:11.4,proj:88,sqft:1.478,pRev:6.8,pGm:0.9,pProj:7,pSqft:5.4},
+          y:{rev:163.4,budRev:158.1,gm:29.5,budGm:28.2,eb:25.9,proj:199,sqft:3.361,pRev:11.2,pGm:0.8,pProj:21,pSqft:8.6} },
+      act:[20.4,21.6,25.4,22.9,23.4,24.9,24.8],
+      bud:[20.0,21.2,24.0,23.1,23.4,22.9,23.5],
+      gmT:[28.4,28.8,29.2,29.6,29.7,30.1,29.4],
+      ebT:[14.9,15.2,15.6,15.8,15.9,16.2,16.5],
+      vert:[["Events",30],["Modular",29],["Seating",26],["Maestra",15]],
+      vmarg:[["Modular",32.4],["Maestra",31.0],["Events",27.8],["Seating",26.1]],
+      splitLbl:"By business unit",
+      split:[["Arena UK",44.4],["Arena Middle East",30.6],["Arena Saudi Arabia",12.5],["Maestra",12.5]],
+      out:{ob:84.1,pipe:96.2,fc:289.6,budFc:281.5,ye:29.2,yeEb:45.1,cover:88},
+      proj:[["Abu Dhabi Grand Prix","Modular","EMEA",4.6,27],
+            ["The Open Championship","Seating","EMEA",4.1,29],
+            ["Riyadh Season","Modular","EMEA",3.4,30],
+            ["Wimbledon hospitality","Events","EMEA",2.9,32],
+            ["Expo City conference village","Modular","EMEA",1.9,29]],
+      com:[["Temporary seats","48,600","installed"],["Clearspan structures","221,400","sq ft"],
+           ["Double decker","41,900","sq ft"],["Event flooring","243,100","sq ft"],
+           ["Cabins and units","186","deployed"],["Truck movements","574","logged"]]
+    },
+    amer:{
+      name:"Americas",
+      h:{ m:{rev:18.2,budRev:19.6,gm:24.1,budGm:26.5,eb:1.9,proj:18,sqft:0.418,pRev:4.0,pGm:-1.1,pProj:2,pSqft:2.8},
+          q:{rev:52.1,budRev:56.8,gm:25.2,budGm:26.8,eb:6.2,proj:52,sqft:1.196,pRev:-1.2,pGm:-0.4,pProj:1,pSqft:-0.6},
+          y:{rev:119.8,budRev:127.4,gm:25.0,budGm:26.6,eb:14.7,proj:121,sqft:2.742,pRev:2.1,pGm:-1.3,pProj:6,pSqft:1.9} },
+      act:[16.1,16.8,16.6,17.2,17.4,17.5,18.2],
+      bud:[15.9,17.2,17.9,18.9,18.8,19.1,19.6],
+      gmT:[25.9,25.6,25.4,25.1,25.3,25.2,24.1],
+      ebT:[12.1,11.8,11.6,11.4,11.9,11.6,10.4],
+      vert:[["Events",38],["Modular",30],["Seating",24],["Maestra",8]],
+      vmarg:[["Modular",27.4],["Maestra",24.8],["Events",23.6],["Seating",21.9]],
+      splitLbl:"By business unit",
+      split:[["Arena Americas East",54],["Arena Americas West",31],["Arena Canada",15]],
+      out:{ob:66.8,pipe:78.4,fc:214.3,budFc:219.0,ye:25.4,yeEb:31.2,cover:76},
+      proj:[["FIFA World Cup 26, Toronto","Modular","Americas",6.9,31],
+            ["Kentucky Derby","Seating","Americas",3.2,28],
+            ["US Open hospitality","Events","Americas",2.7,26],
+            ["Coachella structures","Modular","Americas",2.1,24],
+            ["PGA Championship","Seating","Americas",1.8,25]],
+      com:[["Temporary seats","39,800","installed"],["Clearspan structures","178,300","sq ft"],
+           ["Double decker","33,600","sq ft"],["Event flooring","199,700","sq ft"],
+           ["Cabins and units","152","deployed"],["Truck movements","471","logged"]]
+    },
+    apac:{
+      name:"APAC",
+      h:{ m:{rev:9.4,budRev:8.8,gm:31.2,budGm:29.5,eb:1.7,proj:12,sqft:0.212,pRev:-1.1,pGm:0.0,pProj:2,pSqft:1.4},
+          q:{rev:25.3,budRev:25.8,gm:30.9,budGm:29.6,eb:4.5,proj:34,sqft:0.610,pRev:9.1,pGm:0.7,pProj:3,pSqft:6.2},
+          y:{rev:58.5,budRev:52.7,gm:30.4,budGm:29.4,eb:10.0,proj:82,sqft:1.383,pRev:14.8,pGm:1.1,pProj:11,pSqft:9.7} },
+      act:[7.5,7.8,8.5,7.5,8.3,9.5,9.4],
+      bud:[5.7,6.0,6.4,8.2,8.6,9.0,8.8],
+      gmT:[29.4,29.8,30.2,30.6,30.9,31.2,31.2],
+      ebT:[15.8,16.2,16.8,17.2,17.6,18.1,18.1],
+      vert:[["Events",36],["Modular",22],["Seating",20],["Maestra",22]],
+      vmarg:[["Modular",33.8],["Maestra",32.1],["Events",30.2],["Seating",28.4]],
+      splitLbl:"By business unit",
+      split:[["Arena Asia",62],["Arena Australia",26],["Arena Japan",12]],
+      out:{ob:35.4,pipe:40.0,fc:108.5,budFc:97.5,ye:30.3,yeEb:15.2,cover:91},
+      proj:[["Melbourne Cup Carnival","Events","APAC",2.8,33],
+            ["Singapore Grand Prix","Modular","APAC",2.4,31],
+            ["Australian Open seating","Seating","APAC",1.9,29],
+            ["Hong Kong Sevens","Events","APAC",1.4,30],
+            ["Tokyo expo pavilion","Modular","APAC",1.1,28]],
+      com:[["Temporary seats","20,000","installed"],["Clearspan structures","86,500","sq ft"],
+           ["Double decker","17,200","sq ft"],["Event flooring","102,000","sq ft"],
+           ["Cabins and units","79","deployed"],["Truck movements","241","logged"]]
     }
   };
 
-  var TREND = {
-    uae: [["Mar",29100],["Apr",31200],["May",33100],["Jun",37600],["Jul",41800]],
-    ksa: [["Mar",16800],["Apr",17900],["May",19400],["Jun",21700],["Jul",23900]]
-  };
+  var PLABEL = { m:"July 2026", q:"Q2 2026, April to June", y:"Year to date, January to July 2026" };
+  var PSHORT = { m:"prior month", q:"prior quarter", y:"same period last year" };
+  var HILITE = { m:[6], q:[3,4,5], y:[0,1,2,3,4,5,6] };
 
-  var QUESTIONS = [
-    ["How much did we deploy at Abu Dhabi Grand Prix this year?","<strong>14,200 sqm</strong> across Modular and Seating, 22,400 seats installed, delivered over 19 days by a peak crew of 84."],
-    ["Which vertical carried the most square metres last quarter?","<strong>Modular</strong>, with 61,300 sqm across 13 projects. Events delivered more projects but a third of the footprint."],
-    ["What did we deliver in July, and what did it return?","<strong>23 projects, 41,800 sqm, AED 18.4m revenue at 28.8% margin.</strong> Margin fell 2.4 points on June, driven by the Marathon start village at 19%."],
-    ["Show me every job we have done for the same client in the last two years.","<strong>11 projects, AED 26.9m</strong> across three verticals. Average margin 27.1%. Two ran over on crew cost."]
-  ];
-
-  var region = "uae", month = "jul", qi = 0;
+  var region = "group", period = "m";
   function el(id){ return document.getElementById(id); }
+  function sgn(n){ return (n>0?"+":"") + n.toFixed(1); }
+  function cls(n){ return n>=0 ? "delta up" : "delta dn"; }
 
-  function renderTrend(){
-    var rows = TREND[region], max = 0, i;
-    for(i=0;i<rows.length;i++){ if(rows[i][1]>max) max = rows[i][1]; }
-    var idx = {may:2, jun:3, jul:4}[month];
-    var html = "";
-    for(i=0;i<rows.length;i++){
-      var pct = Math.round((rows[i][1]/max)*100);
-      var live = (i === idx) ? " now" : "";
-      html += '<div class="bar'+live+'"><span class="v">'+(rows[i][1]/1000).toFixed(1)+'k</span><div class="col" style="height:'+pct+'%"></div><span class="m">'+rows[i][0]+'</span></div>';
+  function drawBars(d){
+    var max=0,i;
+    for(i=0;i<7;i++){ if(d.act[i]>max)max=d.act[i]; if(d.bud[i]>max)max=d.bud[i]; }
+    var hi = HILITE[period], html="";
+    for(i=0;i<7;i++){
+      var on = hi.indexOf(i)>-1 ? " on" : "";
+      html += '<div class="bar'+on+'"><span class="v">'+d.act[i].toFixed(1)+'</span>'
+            + '<div class="pair"><div class="act" style="height:'+Math.round(d.act[i]/max*100)+'%"></div>'
+            + '<div class="bud" style="height:'+Math.round(d.bud[i]/max*100)+'%"></div></div>'
+            + '<span class="m">'+M[i]+'</span></div>';
     }
     el("chart").innerHTML = html;
   }
 
-  function render(){
-    var d = DATA[region][month], i;
-
-    el("s-events").textContent = d.events;
-    el("s-sqm").textContent    = d.sqm;
-    el("s-rev").textContent    = d.rev;
-    el("s-cost").textContent   = d.cost;
-    el("s-marg").textContent   = d.marg;
-
-    el("d-events").textContent = d.d[0];
-    el("d-sqm").textContent    = d.d[1];
-    el("d-rev").textContent    = d.d[2];
-    el("d-cost").textContent   = d.d[3];
-    el("d-marg").textContent   = d.d[4];
-    el("d-cost").className = "delta dn";
-    el("d-marg").className = "delta" + (d.d[4].indexOf("down") === 0 ? " dn" : "");
-
-    var v = "";
-    for(i=0;i<d.verticals.length;i++){
-      v += '<div class="vrow"><div class="vtop"><span class="vname">'+d.verticals[i][0]+'</span><span class="vmeta">'+d.verticals[i][2]+'</span></div><div class="track"><div class="fill" style="width:'+d.verticals[i][1]+'%"></div></div></div>';
+  function drawSpark(id, series){
+    var mn=Math.min.apply(null,series), mx=Math.max.apply(null,series), hi=HILITE[period], html="", i;
+    for(i=0;i<series.length;i++){
+      var pct = mx===mn ? 100 : Math.round(((series[i]-mn)/(mx-mn))*70)+30;
+      html += '<div class="'+(hi.indexOf(i)>-1?"on":"")+'" style="height:'+pct+'%"></div>';
     }
-    el("verticals").innerHTML = v;
-
-    var c = "";
-    for(i=0;i<d.commodities.length;i++){
-      c += '<div class="com"><div class="cn">'+d.commodities[i][0]+'</div><div class="cv">'+d.commodities[i][1]+'</div><div class="cu">'+d.commodities[i][2]+'</div></div>';
-    }
-    el("commodities").innerHTML = c;
-
-    var p = "";
-    for(i=0;i<d.projects.length;i++){
-      var r = d.projects[i];
-      p += '<tr><td><div class="t1">'+r[0]+'</div><div class="t2">'+r[1]+'</div></td><td><span class="badge">'+r[2]+'</span></td><td class="r">'+r[3]+'</td><td class="r">'+r[4]+'</td><td class="r"><span class="badge '+r[6]+'">'+r[5]+'</span></td></tr>';
-    }
-    el("projects").innerHTML = p;
-
-    renderTrend();
+    el(id).innerHTML = html;
   }
 
-  function bind(containerId, attr, setter){
-    var box = el(containerId);
-    if(!box) return;
+  function bars(target, rows, money, rev, green){
+    var max=0,i;
+    for(i=0;i<rows.length;i++){ if(rows[i][1]>max)max=rows[i][1]; }
+    var html="";
+    for(i=0;i<rows.length;i++){
+      var val = money ? "$"+(rows[i][1]/100*rev).toFixed(1)+"m" : rows[i][1].toFixed(1)+"%";
+      html += '<div class="vrow"><div class="vtop"><span class="vname">'+rows[i][0]+'</span>'
+            + '<span class="vmeta">'+val+'</span></div><div class="track"><div class="fill'+(green?" g":"")
+            + '" style="width:'+Math.round(rows[i][1]/max*100)+'%"></div></div></div>';
+    }
+    el(target).innerHTML = html;
+  }
+
+  function render(){
+    var d = R[region], h = d.h[period], p = PSHORT[period];
+
+    el("periodnote").innerHTML = PLABEL[period] + " &nbsp;&middot;&nbsp; " + d.name
+      + " &nbsp;&middot;&nbsp; financial year January to December";
+
+    el("k-rev").textContent  = h.rev.toFixed(1)+"m";
+    el("k-revd").textContent = sgn(h.pRev)+"% on "+p;
+    el("k-revd").className   = cls(h.pRev);
+
+    var rv = (h.rev-h.budRev)/h.budRev*100;
+    el("k-revb").textContent  = sgn(rv)+"%";
+    el("k-revbd").textContent = "$"+Math.abs(h.rev-h.budRev).toFixed(1)+"m "+(rv>=0?"ahead of":"behind")+" plan";
+    el("k-revbd").className   = cls(rv);
+
+    el("k-gm").textContent  = h.gm.toFixed(1)+"%";
+    el("k-gmd").textContent = (h.pGm>=0?"up ":"down ")+Math.abs(h.pGm).toFixed(1)+" pts on "+p;
+    el("k-gmd").className   = cls(h.pGm);
+
+    var gv = h.gm-h.budGm;
+    el("k-gmb").textContent  = sgn(gv)+" pts";
+    el("k-gmbd").textContent = gv>=0 ? "ahead of plan" : "behind plan";
+    el("k-gmbd").className   = cls(gv);
+
+    el("k-eb").textContent  = h.eb.toFixed(1)+"m";
+    el("k-ebd").textContent = (h.eb/h.rev*100).toFixed(1)+"% of revenue";
+    el("k-ebd").className   = "delta up";
+
+    el("k-proj").textContent  = h.proj;
+    el("k-projd").textContent = "+"+h.pProj+" on "+p;
+    el("k-projd").className   = "delta up";
+
+    drawBars(d);
+    drawSpark("sp-gm", d.gmT); drawSpark("sp-eb", d.ebT);
+    el("sp-gmv").textContent = h.gm.toFixed(1)+"%";
+    el("sp-ebv").textContent = (h.eb/h.rev*100).toFixed(1)+"%";
+
+    bars("d-vert",  d.vert,  true,  h.rev, false);
+    bars("d-split", d.split, true,  h.rev, false);
+    bars("d-marg",  d.vmarg, false, 0,     true);
+    el("d-splitlbl").textContent = d.splitLbl;
+
+    el("k-sqft").textContent  = h.sqft.toFixed(2)+"m";
+    el("k-sqftd").textContent = sgn(h.pSqft)+"% on "+p;
+    el("k-sqftd").className   = cls(h.pSqft);
+    el("k-avg").innerHTML     = '<span class="unit">$</span>'+Math.round(h.rev*1000/h.proj)+"k";
+    el("k-rsf").innerHTML     = '<span class="unit">$</span>'+(h.rev/(h.sqft*1000)*1000).toFixed(1);
+
+    var o = d.out;
+    el("k-ob").textContent   = o.ob.toFixed(1)+"m";
+    el("k-obd").textContent  = o.cover+"% of remaining budget";
+    el("k-pipe").textContent = o.pipe.toFixed(1)+"m";
+    el("k-fc").textContent   = o.fc.toFixed(1)+"m";
+    var fv = (o.fc-o.budFc)/o.budFc*100;
+    el("k-fcd").textContent  = sgn(fv)+"% vs budget";
+    el("k-fcd").className    = cls(fv);
+    el("k-ye").textContent   = o.ye.toFixed(1)+"%";
+    el("k-yed").textContent  = "EBITDA $"+o.yeEb.toFixed(1)+"m";
+
+    var t="",i;
+    for(i=0;i<d.proj.length;i++){
+      var r=d.proj[i];
+      t += '<tr><td><div class="t1">'+r[0]+'</div><div class="t2">'+r[1]+'</div></td>'
+        +  '<td><span class="badge">'+r[2]+'</span></td>'
+        +  '<td class="r">$'+r[3].toFixed(1)+'m</td>'
+        +  '<td class="r"><span class="badge '+(r[4]>=28?"g":"w")+'">'+r[4]+'%</span></td></tr>';
+    }
+    el("d-proj").innerHTML = t;
+
+    var c="";
+    for(i=0;i<d.com.length;i++){
+      c += '<div class="com"><div class="cn">'+d.com[i][0]+'</div><div class="cv">'+d.com[i][1]
+        +  '</div><div class="cu">'+d.com[i][2]+'</div></div>';
+    }
+    el("d-com").innerHTML = c;
+  }
+
+  function bind(id, set){
+    var box = el(id); if(!box) return;
     var kids = box.getElementsByTagName("button");
     for(var i=0;i<kids.length;i++){
       (function(b, all){
-        if(b.disabled) return;
         b.onclick = function(){
           for(var j=0;j<all.length;j++){ all[j].className = all[j].className.replace(/\s*\bon\b/,""); }
-          b.className = (b.className ? b.className + " on" : "on");
-          setter(b.getAttribute(attr));
+          b.className = "on";
+          set(b.getAttribute("data-k"));
           render();
         };
       })(kids[i], kids);
     }
   }
-
-  bind("regions","data-region",function(x){ region = x; });
-  bind("months","data-month",function(x){ month = x; });
-
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if(!reduce){
-    el("q").style.transition = "opacity .25s";
-    el("a").style.transition = "opacity .25s";
-    setInterval(function(){
-      qi = (qi + 1) % QUESTIONS.length;
-      var q = el("q"), a = el("a");
-      q.style.opacity = 0; a.style.opacity = 0;
-      setTimeout(function(){
-        q.textContent = QUESTIONS[qi][0];
-        a.innerHTML   = QUESTIONS[qi][1];
-        q.style.opacity = 1; a.style.opacity = 1;
-      }, 260);
-    }, 5200);
-  }
+  bind("regions", function(x){ region = x; });
+  bind("periods", function(x){ period = x; });
 
   render();
 })();
