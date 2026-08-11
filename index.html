@@ -27,6 +27,18 @@
   .mast h1{margin:0;font-size:32px;font-weight:800;letter-spacing:-1.3px;line-height:1.05}
   .mast .sub{color:var(--grey);font-size:14px;margin-top:9px}
 
+  .ask{margin:22px 0 0;background:var(--white);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .ask .alb{font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:var(--grey-light);font-weight:800;margin-bottom:11px}
+  .ask .field{display:flex;align-items:center;gap:11px;border:1px solid var(--line);border-radius:9px;padding:11px 13px;background:var(--paper)}
+  .ask .caret{width:7px;height:17px;background:var(--accent);flex:none;animation:blink 1.1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  @media (prefers-reduced-motion:reduce){.ask .caret{animation:none}}
+  .ask .q{font-size:14.5px;font-weight:500;transition:opacity .25s}
+  .ask .ans{margin-top:12px;padding-top:12px;border-top:1px solid var(--line2);font-size:13.5px;color:var(--grey);line-height:1.6;transition:opacity .25s}
+  .ask .ans strong{color:var(--ink);font-weight:700}
+  .ask .priv{margin-top:12px;font-size:11px;color:var(--grey-light);font-weight:600;line-height:1.5}
+  .tdband{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .tdlbl{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--grey-light);font-weight:800;margin:22px 0 9px}
   .controls{display:flex;gap:24px;flex-wrap:wrap;margin:24px 0 8px;align-items:flex-end}
   .clbl{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--grey-light);font-weight:800;margin-bottom:8px}
   .tabs{display:flex;gap:5px;flex-wrap:wrap}
@@ -158,6 +170,16 @@
     <p class="sub">Trading performance against budget, where revenue is coming from, and what is already secured. All figures in US dollars.</p>
   </header>
 
+  <section class="ask">
+    <div class="alb">Ask Arena</div>
+    <div class="field">
+      <span class="caret" aria-hidden="true"></span>
+      <span class="q" id="q">How much cash do we have across the group right now?</span>
+    </div>
+    <div class="ans" id="a"><strong>$48.6m</strong> across all Arena entities. EMEA $21.4m, Americas $18.9m, APAC $8.3m. Down $2.1m on last month.</div>
+    <p class="priv">Answers are drawn from Arena's own data, inside Arena's Microsoft environment. Nothing is sent outside the tenant.</p>
+  </section>
+
   <div class="controls">
     <div>
       <div class="clbl">View</div>
@@ -190,7 +212,14 @@
     <div class="stat"><div class="num" id="k-gm">27.8%</div><div class="lbl">Gross margin</div><div class="delta dn" id="k-gmd">down 1.0 pts on prior month</div></div>
     <div class="stat"><div class="num a" id="k-gmb">+0.2 pts</div><div class="lbl">Margin vs budget</div><div class="delta up" id="k-gmbd">ahead of plan</div></div>
     <div class="stat"><div class="num"><span class="unit">$</span><span id="k-eb">7.7m</span></div><div class="lbl">EBITDA</div><div class="delta up" id="k-ebd">14.7% of revenue</div></div>
-    <div class="stat"><div class="num" id="k-proj">61</div><div class="lbl">Projects delivered</div><div class="delta up" id="k-projd">+6 on prior month</div></div>
+    <div class="stat"><div class="num a"><span class="unit">$</span><span id="k-cash">48.6m</span></div><div class="lbl">Cash balance</div><div class="delta up">at period end</div></div>
+  </section>
+
+  <div class="tdlbl">Delivered to date &nbsp;&middot;&nbsp; since 1 January 2026</div>
+  <section class="tdband">
+    <div class="stat"><div class="num a" id="t-sqm">695,400</div><div class="lbl">Square metres rented out</div><div class="delta up">+7.3% on same point last year</div></div>
+    <div class="stat"><div class="num a" id="t-seats">214,600</div><div class="lbl">Seats installed</div><div class="delta up">+9.1% on same point last year</div></div>
+    <div class="stat"><div class="num" id="t-proj">402</div><div class="lbl">Projects delivered</div><div class="delta up">+38 on same point last year</div></div>
   </section>
 
   <div class="sechead">
@@ -258,9 +287,9 @@
     </section>
   </div>
   <section class="stats" style="grid-template-columns:repeat(3,1fr)">
-    <div class="stat"><div class="num a" id="k-sqft">1.14m</div><div class="lbl">Square feet delivered</div><div class="delta up" id="k-sqftd">+6.2% on prior month</div></div>
+    <div class="stat"><div class="num a" id="k-sqft">106,100</div><div class="lbl">Square metres delivered</div><div class="delta up" id="k-sqftd">+6.2% on prior month</div></div>
     <div class="stat"><div class="num" id="k-avg"><span class="unit">$</span>859k</div><div class="lbl">Average project value</div><div class="delta up" id="k-avgd">across projects delivered</div></div>
-    <div class="stat"><div class="num" id="k-rsf"><span class="unit">$</span>45.9</div><div class="lbl">Revenue per square foot</div><div class="delta up" id="k-rsfd">blended across verticals</div></div>
+    <div class="stat"><div class="num" id="k-rsf"><span class="unit">$</span>494</div><div class="lbl">Revenue per square metre</div><div class="delta up" id="k-rsfd">blended across verticals</div></div>
   </section>
 
   <div class="sechead">
@@ -294,9 +323,9 @@
       <p class="opsnote">Delivery data for operational teams. Not part of the executive view.</p>
       <div class="comgrid" id="d-com">
         <div class="com"><div class="cn">Temporary seats</div><div class="cv">108,400</div><div class="cu">installed</div></div>
-        <div class="com"><div class="cn">Clearspan structures</div><div class="cv">486,200</div><div class="cu">sq ft</div></div>
-        <div class="com"><div class="cn">Double decker</div><div class="cv">92,700</div><div class="cu">sq ft</div></div>
-        <div class="com"><div class="cn">Event flooring</div><div class="cv">544,800</div><div class="cu">sq ft</div></div>
+        <div class="com"><div class="cn">Clearspan structures</div><div class="cv">45,200</div><div class="cu">sqm</div></div>
+        <div class="com"><div class="cn">Double decker</div><div class="cv">8,600</div><div class="cu">sqm</div></div>
+        <div class="com"><div class="cn">Event flooring</div><div class="cv">50,600</div><div class="cu">sqm</div></div>
         <div class="com"><div class="cn">Cabins and units</div><div class="cv">417</div><div class="cu">deployed</div></div>
         <div class="com"><div class="cn">Truck movements</div><div class="cv">1,286</div><div class="cu">logged</div></div>
       </div>
@@ -318,9 +347,9 @@
   var R = {
     group:{
       name:"Group",
-      h:{ m:{rev:52.4,budRev:51.9,gm:27.8,budGm:27.6,eb:7.7,proj:61,sqft:1.142,pRev:8.1,pGm:-1.0,pProj:6,pSqft:6.2},
-          q:{rev:148.6,budRev:152.0,gm:28.4,budGm:27.9,eb:22.1,proj:174,sqft:3.284,pRev:5.2,pGm:0.6,pProj:11,pSqft:4.1},
-          y:{rev:341.7,budRev:338.2,gm:28.1,budGm:27.8,eb:50.6,proj:402,sqft:7.486,pRev:9.6,pGm:0.4,pProj:38,pSqft:7.3} },
+      h:{ m:{rev:52.4,budRev:51.9,gm:27.8,budGm:27.6,eb:7.7,proj:61,sqft:106.1,pRev:8.1,pGm:-1.0,pProj:6,pSqft:6.2},
+          q:{rev:148.6,budRev:152.0,gm:28.4,budGm:27.9,eb:22.1,proj:174,sqft:305.1,pRev:5.2,pGm:0.6,pProj:11,pSqft:4.1},
+          y:{rev:341.7,budRev:338.2,gm:28.1,budGm:27.8,eb:50.6,proj:402,sqft:695.4,pRev:9.6,pGm:0.4,pProj:38,pSqft:7.3} },
       act:[44.0,46.2,50.5,47.6,49.1,51.9,52.4],
       bud:[42.0,45.0,47.3,49.2,50.4,52.4,51.9],
       gmT:[27.2,27.6,28.0,28.1,28.3,28.8,27.8],
@@ -335,15 +364,15 @@
             ["The Open Championship","Seating","EMEA",4.1,29],
             ["Riyadh Season","Modular","EMEA",3.4,30],
             ["Melbourne Cup Carnival","Events","APAC",2.8,33]],
-      com:[["Temporary seats","108,400","installed"],["Clearspan structures","486,200","sq ft"],
-           ["Double decker","92,700","sq ft"],["Event flooring","544,800","sq ft"],
+      com:[["Temporary seats","108,400","installed"],["Clearspan structures","45,200","sqm"],
+           ["Double decker","8,600","sqm"],["Event flooring","50,600","sqm"],
            ["Cabins and units","417","deployed"],["Truck movements","1,286","logged"]]
     },
     emea:{
       name:"EMEA",
-      h:{ m:{rev:24.8,budRev:23.5,gm:29.4,budGm:28.0,eb:4.1,proj:31,sqft:0.512,pRev:-0.4,pGm:-0.7,pProj:2,pSqft:3.1},
-          q:{rev:71.2,budRev:69.4,gm:29.8,budGm:28.3,eb:11.4,proj:88,sqft:1.478,pRev:6.8,pGm:0.9,pProj:7,pSqft:5.4},
-          y:{rev:163.4,budRev:158.1,gm:29.5,budGm:28.2,eb:25.9,proj:199,sqft:3.361,pRev:11.2,pGm:0.8,pProj:21,pSqft:8.6} },
+      h:{ m:{rev:24.8,budRev:23.5,gm:29.4,budGm:28.0,eb:4.1,proj:31,sqft:47.6,pRev:-0.4,pGm:-0.7,pProj:2,pSqft:3.1},
+          q:{rev:71.2,budRev:69.4,gm:29.8,budGm:28.3,eb:11.4,proj:88,sqft:137.3,pRev:6.8,pGm:0.9,pProj:7,pSqft:5.4},
+          y:{rev:163.4,budRev:158.1,gm:29.5,budGm:28.2,eb:25.9,proj:199,sqft:312.2,pRev:11.2,pGm:0.8,pProj:21,pSqft:8.6} },
       act:[20.4,21.6,25.4,22.9,23.4,24.9,24.8],
       bud:[20.0,21.2,24.0,23.1,23.4,22.9,23.5],
       gmT:[28.4,28.8,29.2,29.6,29.7,30.1,29.4],
@@ -358,15 +387,15 @@
             ["Riyadh Season","Modular","EMEA",3.4,30],
             ["Wimbledon hospitality","Events","EMEA",2.9,32],
             ["Expo City conference village","Modular","EMEA",1.9,29]],
-      com:[["Temporary seats","48,600","installed"],["Clearspan structures","221,400","sq ft"],
-           ["Double decker","41,900","sq ft"],["Event flooring","243,100","sq ft"],
+      com:[["Temporary seats","48,600","installed"],["Clearspan structures","20,600","sqm"],
+           ["Double decker","3,900","sqm"],["Event flooring","22,600","sqm"],
            ["Cabins and units","186","deployed"],["Truck movements","574","logged"]]
     },
     amer:{
       name:"Americas",
-      h:{ m:{rev:18.2,budRev:19.6,gm:24.1,budGm:26.5,eb:1.9,proj:18,sqft:0.418,pRev:4.0,pGm:-1.1,pProj:2,pSqft:2.8},
-          q:{rev:52.1,budRev:56.8,gm:25.2,budGm:26.8,eb:6.2,proj:52,sqft:1.196,pRev:-1.2,pGm:-0.4,pProj:1,pSqft:-0.6},
-          y:{rev:119.8,budRev:127.4,gm:25.0,budGm:26.6,eb:14.7,proj:121,sqft:2.742,pRev:2.1,pGm:-1.3,pProj:6,pSqft:1.9} },
+      h:{ m:{rev:18.2,budRev:19.6,gm:24.1,budGm:26.5,eb:1.9,proj:18,sqft:38.8,pRev:4.0,pGm:-1.1,pProj:2,pSqft:2.8},
+          q:{rev:52.1,budRev:56.8,gm:25.2,budGm:26.8,eb:6.2,proj:52,sqft:111.1,pRev:-1.2,pGm:-0.4,pProj:1,pSqft:-0.6},
+          y:{rev:119.8,budRev:127.4,gm:25.0,budGm:26.6,eb:14.7,proj:121,sqft:254.7,pRev:2.1,pGm:-1.3,pProj:6,pSqft:1.9} },
       act:[16.1,16.8,16.6,17.2,17.4,17.5,18.2],
       bud:[15.9,17.2,17.9,18.9,18.8,19.1,19.6],
       gmT:[25.9,25.6,25.4,25.1,25.3,25.2,24.1],
@@ -381,15 +410,15 @@
             ["US Open hospitality","Events","Americas",2.7,26],
             ["Coachella structures","Modular","Americas",2.1,24],
             ["PGA Championship","Seating","Americas",1.8,25]],
-      com:[["Temporary seats","39,800","installed"],["Clearspan structures","178,300","sq ft"],
-           ["Double decker","33,600","sq ft"],["Event flooring","199,700","sq ft"],
+      com:[["Temporary seats","39,800","installed"],["Clearspan structures","16,600","sqm"],
+           ["Double decker","3,100","sqm"],["Event flooring","18,600","sqm"],
            ["Cabins and units","152","deployed"],["Truck movements","471","logged"]]
     },
     apac:{
       name:"APAC",
-      h:{ m:{rev:9.4,budRev:8.8,gm:31.2,budGm:29.5,eb:1.7,proj:12,sqft:0.212,pRev:-1.1,pGm:0.0,pProj:2,pSqft:1.4},
-          q:{rev:25.3,budRev:25.8,gm:30.9,budGm:29.6,eb:4.5,proj:34,sqft:0.610,pRev:9.1,pGm:0.7,pProj:3,pSqft:6.2},
-          y:{rev:58.5,budRev:52.7,gm:30.4,budGm:29.4,eb:10.0,proj:82,sqft:1.383,pRev:14.8,pGm:1.1,pProj:11,pSqft:9.7} },
+      h:{ m:{rev:9.4,budRev:8.8,gm:31.2,budGm:29.5,eb:1.7,proj:12,sqft:19.7,pRev:-1.1,pGm:0.0,pProj:2,pSqft:1.4},
+          q:{rev:25.3,budRev:25.8,gm:30.9,budGm:29.6,eb:4.5,proj:34,sqft:56.7,pRev:9.1,pGm:0.7,pProj:3,pSqft:6.2},
+          y:{rev:58.5,budRev:52.7,gm:30.4,budGm:29.4,eb:10.0,proj:82,sqft:128.5,pRev:14.8,pGm:1.1,pProj:11,pSqft:9.7} },
       act:[7.5,7.8,8.5,7.5,8.3,9.5,9.4],
       bud:[5.7,6.0,6.4,8.2,8.6,9.0,8.8],
       gmT:[29.4,29.8,30.2,30.6,30.9,31.2,31.2],
@@ -404,8 +433,8 @@
             ["Australian Open seating","Seating","APAC",1.9,29],
             ["Hong Kong Sevens","Events","APAC",1.4,30],
             ["Tokyo expo pavilion","Modular","APAC",1.1,28]],
-      com:[["Temporary seats","20,000","installed"],["Clearspan structures","86,500","sq ft"],
-           ["Double decker","17,200","sq ft"],["Event flooring","102,000","sq ft"],
+      com:[["Temporary seats","20,000","installed"],["Clearspan structures","8,000","sqm"],
+           ["Double decker","1,600","sqm"],["Event flooring","9,500","sqm"],
            ["Cabins and units","79","deployed"],["Truck movements","241","logged"]]
     }
   };
@@ -414,7 +443,30 @@
   var PSHORT = { m:"prior month", q:"prior quarter", y:"same period last year" };
   var HILITE = { m:[6], q:[3,4,5], y:[0,1,2,3,4,5,6] };
 
-  var region = "group", period = "m";
+  var CASH = {
+    group:{m:48.6,q:44.2,y:48.6}, emea:{m:21.4,q:19.8,y:21.4},
+    amer:{m:18.9,q:17.1,y:18.9},  apac:{m:8.3,q:7.3,y:8.3}
+  };
+  var TODATE = {
+    group:{sqm:"695,400", seats:"214,600", proj:402},
+    emea:{sqm:"312,200",  seats:"96,400",  proj:199},
+    amer:{sqm:"254,700",  seats:"78,300",  proj:121},
+    apac:{sqm:"128,500",  seats:"39,900",  proj:82}
+  };
+  var QUESTIONS = [
+    ["How much cash do we have across the group right now?",
+     "<strong>$48.6m</strong> across all Arena entities. EMEA $21.4m, Americas $18.9m, APAC $8.3m. Down $2.1m on last month."],
+    ["How many square metres have we rented out this year?",
+     "<strong>695,400 sqm</strong> across 402 projects since January, 7.3% ahead of the same point last year. EMEA carries 45% of it."],
+    ["What have we done at the Jeddah Corniche circuit this year?",
+     "<strong>$7.4m across three phases</strong> at 24% blended margin. 18,600 sqm deployed and 22,400 seats installed."],
+    ["Which region is furthest behind budget?",
+     "<strong>Americas, 6.0% behind</strong> year to date. $119.8m against a $127.4m plan, with margin 1.6 points under at 25.0%."],
+    ["How many seats have we installed to date?",
+     "<strong>214,600</strong> group wide since January. EMEA 96,400, Americas 78,300, APAC 39,900."]
+  ];
+
+  var region = "group", period = "m", qi = 0;
   function el(id){ return document.getElementById(id); }
   function sgn(n){ return (n>0?"+":"") + n.toFixed(1); }
   function cls(n){ return n>=0 ? "delta up" : "delta dn"; }
@@ -483,9 +535,12 @@
     el("k-ebd").textContent = (h.eb/h.rev*100).toFixed(1)+"% of revenue";
     el("k-ebd").className   = "delta up";
 
-    el("k-proj").textContent  = h.proj;
-    el("k-projd").textContent = "+"+h.pProj+" on "+p;
-    el("k-projd").className   = "delta up";
+    el("k-cash").textContent  = CASH[region][period].toFixed(1)+"m";
+
+    var td = TODATE[region];
+    el("t-sqm").textContent   = td.sqm;
+    el("t-seats").textContent = td.seats;
+    el("t-proj").textContent  = td.proj;
 
     drawBars(d);
     drawSpark("sp-gm", d.gmT); drawSpark("sp-eb", d.ebT);
@@ -497,11 +552,11 @@
     bars("d-marg",  d.vmarg, false, 0,     true);
     el("d-splitlbl").textContent = d.splitLbl;
 
-    el("k-sqft").textContent  = h.sqft.toFixed(2)+"m";
+    el("k-sqft").textContent  = Math.round(h.sqft*1000).toLocaleString();
     el("k-sqftd").textContent = sgn(h.pSqft)+"% on "+p;
     el("k-sqftd").className   = cls(h.pSqft);
     el("k-avg").innerHTML     = '<span class="unit">$</span>'+Math.round(h.rev*1000/h.proj)+"k";
-    el("k-rsf").innerHTML     = '<span class="unit">$</span>'+(h.rev/(h.sqft*1000)*1000).toFixed(1);
+    el("k-rsf").innerHTML     = '<span class="unit">$</span>'+Math.round(h.rev*1000/h.sqft).toLocaleString();
 
     var o = d.out;
     el("k-ob").textContent   = o.ob.toFixed(1)+"m";
@@ -548,6 +603,21 @@
   }
   bind("regions", function(x){ region = x; });
   bind("periods", function(x){ period = x; });
+
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(!reduce){
+    setInterval(function(){
+      qi = (qi + 1) % QUESTIONS.length;
+      var qEl = el("q"), aEl = el("a");
+      if(!qEl || !aEl) return;
+      qEl.style.opacity = 0; aEl.style.opacity = 0;
+      setTimeout(function(){
+        qEl.textContent = QUESTIONS[qi][0];
+        aEl.innerHTML   = QUESTIONS[qi][1];
+        qEl.style.opacity = 1; aEl.style.opacity = 1;
+      }, 260);
+    }, 5600);
+  }
 
   render();
 })();
