@@ -62,6 +62,11 @@
   .stat .unit{font-size:14px;font-weight:700;color:var(--grey);letter-spacing:-.2px}
   .stat .lbl{font-size:9.5px;letter-spacing:.9px;text-transform:uppercase;color:var(--grey-light);font-weight:800;margin-top:10px}
   .stat .delta{font-size:11.5px;font-weight:700;margin-top:7px}
+  .stat .num,.stat .delta{transition:opacity .2s}
+  .fade{opacity:0}
+  @media (prefers-reduced-motion:reduce){
+    .pair .act,.pair .bud,.spark div,.fill,.stat .num,.stat .delta{transition:none}
+  }
   .up{color:var(--good)} .dn{color:var(--alert)}
 
   .panel{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:16px}
@@ -75,8 +80,10 @@
   .chart{display:flex;align-items:flex-end;gap:9px;height:180px;padding-top:4px}
   .bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;gap:6px}
   .pair{width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;gap:3px}
-  .pair .act{width:52%;background:var(--accent-soft);border-top:3px solid var(--accent);border-radius:4px 4px 0 0}
-  .pair .bud{width:26%;background:transparent;border:1px dashed var(--grey-light);border-bottom:none;border-radius:4px 4px 0 0}
+  .pair .act{width:52%;background:var(--accent-soft);border-top:3px solid var(--accent);border-radius:4px 4px 0 0;
+    transition:height .58s cubic-bezier(.22,1,.36,1)}
+  .pair .bud{width:26%;background:transparent;border:1px dashed var(--grey-light);border-bottom:none;border-radius:4px 4px 0 0;
+    transition:height .58s cubic-bezier(.22,1,.36,1) .05s}
   .bar.on .act{background:var(--accent);border-top-color:var(--ink)}
   .bar .v{font-size:11px;font-weight:800;font-variant-numeric:tabular-nums}
   .bar .m{font-size:10px;letter-spacing:.7px;text-transform:uppercase;color:var(--grey-light);font-weight:800}
@@ -87,7 +94,8 @@
   .key.bud{border:1px dashed var(--grey-light)}
 
   .spark{display:flex;align-items:flex-end;gap:5px;height:52px;margin-top:4px}
-  .spark div{flex:1;background:var(--accent-soft);border-top:2px solid var(--accent);border-radius:3px 3px 0 0}
+  .spark div{flex:1;background:var(--accent-soft);border-top:2px solid var(--accent);border-radius:3px 3px 0 0;
+    transition:height .5s cubic-bezier(.22,1,.36,1)}
   .spark div.on{background:var(--accent);border-top-color:var(--ink)}
   .sparkrow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px;padding-top:18px;border-top:1px solid var(--line2)}
   .sparkrow .st{font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--grey-light)}
@@ -100,7 +108,7 @@
   .vname{font-size:13.5px;font-weight:800;letter-spacing:-.2px}
   .vmeta{font-size:12px;color:var(--grey);font-variant-numeric:tabular-nums}
   .track{height:7px;background:var(--paper);border-radius:4px;overflow:hidden}
-  .fill{height:100%;background:var(--accent);border-radius:4px}
+  .fill{height:100%;background:var(--accent);border-radius:4px;transition:width .6s cubic-bezier(.22,1,.36,1)}
   .fill.g{background:var(--good)}
 
   table{width:100%;border-collapse:collapse;font-size:13.5px}
@@ -468,8 +476,66 @@
 
   var region = "group", period = "m", qi = 0;
   function el(id){ return document.getElementById(id); }
+
+  var REDUCE = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var timers = {};
+
+  // animates a number from its current displayed value to a target
+  function countTo(id, target, fmt){
+    var node = el(id); if(!node) return;
+    if(timers[id]){ clearInterval(timers[id]); timers[id] = null; }
+    if(REDUCE){ node.textContent = fmt(target); return; }
+
+    var raw   = node.textContent.replace(/[^0-9.\-]/g,"");
+    var start = parseFloat(raw);
+    if(isNaN(start)) start = 0;
+    if(start === target){ node.textContent = fmt(target); return; }
+
+    var t0 = Date.now(), dur = 620;
+    timers[id] = setInterval(function(){
+      var p = (Date.now() - t0) / dur;
+      if(p >= 1){
+        clearInterval(timers[id]); timers[id] = null;
+        node.textContent = fmt(target);
+        return;
+      }
+      var e = 1 - Math.pow(1 - p, 3);
+      node.textContent = fmt(start + (target - start) * e);
+    }, 26);
+  }
+
+  var f1   = function(v){ return v.toFixed(1); };
+  var f1m  = function(v){ return v.toFixed(1)+"m"; };
+  var f1p  = function(v){ return v.toFixed(1)+"%"; };
+  var f1ps = function(v){ return (v>0?"+":"")+v.toFixed(1)+"%"; };
+  var f1pt = function(v){ return (v>0?"+":"")+v.toFixed(1)+" pts"; };
+  var fInt = function(v){ return Math.round(v).toLocaleString(); };
+  var fInts= function(v){ return "$"+Math.round(v).toLocaleString(); };
+
+  // briefly fades the small caption lines so they do not jump mid-count
+  function softSet(id, text, cssClass){
+    var node = el(id); if(!node) return;
+    if(REDUCE){ node.textContent = text; if(cssClass) node.className = cssClass; return; }
+    node.className = (cssClass || node.className) + " fade";
+    setTimeout(function(){
+      node.textContent = text;
+      node.className = cssClass || node.className.replace(/\s*fade/,"");
+    }, 190);
+  }
   function sgn(n){ return (n>0?"+":"") + n.toFixed(1); }
   function cls(n){ return n>=0 ? "delta up" : "delta dn"; }
+
+  // sets elements to their real size one frame after insertion so CSS can animate the change
+  function grow(scope, sel, prop){
+    if(!scope) return;
+    var nodes = scope.querySelectorAll(sel);
+    var apply = function(){
+      for(var i=0;i<nodes.length;i++){ nodes[i].style[prop] = nodes[i].getAttribute("data-h")+"%"; }
+    };
+    if(REDUCE){ apply(); return; }
+    if(window.requestAnimationFrame){ requestAnimationFrame(function(){ requestAnimationFrame(apply); }); }
+    else { setTimeout(apply, 30); }
+  }
 
   function drawBars(d){
     var max=0,i;
@@ -478,20 +544,22 @@
     for(i=0;i<7;i++){
       var on = hi.indexOf(i)>-1 ? " on" : "";
       html += '<div class="bar'+on+'"><span class="v">'+d.act[i].toFixed(1)+'</span>'
-            + '<div class="pair"><div class="act" style="height:'+Math.round(d.act[i]/max*100)+'%"></div>'
-            + '<div class="bud" style="height:'+Math.round(d.bud[i]/max*100)+'%"></div></div>'
+            + '<div class="pair"><div class="act" data-h="'+Math.round(d.act[i]/max*100)+'" style="height:0%"></div>'
+            + '<div class="bud" data-h="'+Math.round(d.bud[i]/max*100)+'" style="height:0%"></div></div>'
             + '<span class="m">'+M[i]+'</span></div>';
     }
     el("chart").innerHTML = html;
+    grow(el("chart"), ".act, .bud", "height");
   }
 
   function drawSpark(id, series){
     var mn=Math.min.apply(null,series), mx=Math.max.apply(null,series), hi=HILITE[period], html="", i;
     for(i=0;i<series.length;i++){
       var pct = mx===mn ? 100 : Math.round(((series[i]-mn)/(mx-mn))*70)+30;
-      html += '<div class="'+(hi.indexOf(i)>-1?"on":"")+'" style="height:'+pct+'%"></div>';
+      html += '<div class="'+(hi.indexOf(i)>-1?"on":"")+'" data-h="'+pct+'" style="height:0%"></div>';
     }
     el(id).innerHTML = html;
+    grow(el(id), "div", "height");
   }
 
   function bars(target, rows, money, rev, green){
@@ -502,9 +570,10 @@
       var val = money ? "$"+(rows[i][1]/100*rev).toFixed(1)+"m" : rows[i][1].toFixed(1)+"%";
       html += '<div class="vrow"><div class="vtop"><span class="vname">'+rows[i][0]+'</span>'
             + '<span class="vmeta">'+val+'</span></div><div class="track"><div class="fill'+(green?" g":"")
-            + '" style="width:'+Math.round(rows[i][1]/max*100)+'%"></div></div></div>';
+            + '" data-h="'+Math.round(rows[i][1]/max*100)+'" style="width:0%"></div></div></div>';
     }
     el(target).innerHTML = html;
+    grow(el(target), ".fill", "width");
   }
 
   function render(){
@@ -513,61 +582,54 @@
     el("periodnote").innerHTML = PLABEL[period] + " &nbsp;&middot;&nbsp; " + d.name
       + " &nbsp;&middot;&nbsp; financial year January to December";
 
-    el("k-rev").textContent  = h.rev.toFixed(1)+"m";
-    el("k-revd").textContent = sgn(h.pRev)+"% on "+p;
-    el("k-revd").className   = cls(h.pRev);
+    countTo("k-rev", h.rev, f1m);
+    softSet("k-revd", sgn(h.pRev)+"% on "+p, cls(h.pRev));
 
     var rv = (h.rev-h.budRev)/h.budRev*100;
-    el("k-revb").textContent  = sgn(rv)+"%";
-    el("k-revbd").textContent = "$"+Math.abs(h.rev-h.budRev).toFixed(1)+"m "+(rv>=0?"ahead of":"behind")+" plan";
-    el("k-revbd").className   = cls(rv);
+    countTo("k-revb", rv, f1ps);
+    softSet("k-revbd", "$"+Math.abs(h.rev-h.budRev).toFixed(1)+"m "+(rv>=0?"ahead of":"behind")+" plan", cls(rv));
 
-    el("k-gm").textContent  = h.gm.toFixed(1)+"%";
-    el("k-gmd").textContent = (h.pGm>=0?"up ":"down ")+Math.abs(h.pGm).toFixed(1)+" pts on "+p;
-    el("k-gmd").className   = cls(h.pGm);
+    countTo("k-gm", h.gm, f1p);
+    softSet("k-gmd", (h.pGm>=0?"up ":"down ")+Math.abs(h.pGm).toFixed(1)+" pts on "+p, cls(h.pGm));
 
     var gv = h.gm-h.budGm;
-    el("k-gmb").textContent  = sgn(gv)+" pts";
-    el("k-gmbd").textContent = gv>=0 ? "ahead of plan" : "behind plan";
-    el("k-gmbd").className   = cls(gv);
+    countTo("k-gmb", gv, f1pt);
+    softSet("k-gmbd", gv>=0 ? "ahead of plan" : "behind plan", cls(gv));
 
-    el("k-eb").textContent  = h.eb.toFixed(1)+"m";
-    el("k-ebd").textContent = (h.eb/h.rev*100).toFixed(1)+"% of revenue";
-    el("k-ebd").className   = "delta up";
+    countTo("k-eb", h.eb, f1m);
+    softSet("k-ebd", (h.eb/h.rev*100).toFixed(1)+"% of revenue", "delta up");
 
-    el("k-cash").textContent  = CASH[region][period].toFixed(1)+"m";
+    countTo("k-cash", CASH[region][period], f1m);
 
     var td = TODATE[region];
-    el("t-sqm").textContent   = td.sqm;
-    el("t-seats").textContent = td.seats;
-    el("t-proj").textContent  = td.proj;
+    countTo("t-sqm",   parseFloat(td.sqm.replace(/,/g,"")),   fInt);
+    countTo("t-seats", parseFloat(td.seats.replace(/,/g,"")), fInt);
+    countTo("t-proj",  td.proj, fInt);
 
     drawBars(d);
     drawSpark("sp-gm", d.gmT); drawSpark("sp-eb", d.ebT);
-    el("sp-gmv").textContent = h.gm.toFixed(1)+"%";
-    el("sp-ebv").textContent = (h.eb/h.rev*100).toFixed(1)+"%";
+    countTo("sp-gmv", h.gm, f1p);
+    countTo("sp-ebv", h.eb/h.rev*100, f1p);
 
     bars("d-vert",  d.vert,  true,  h.rev, false);
     bars("d-split", d.split, true,  h.rev, false);
     bars("d-marg",  d.vmarg, false, 0,     true);
     el("d-splitlbl").textContent = d.splitLbl;
 
-    el("k-sqft").textContent  = Math.round(h.sqft*1000).toLocaleString();
-    el("k-sqftd").textContent = sgn(h.pSqft)+"% on "+p;
-    el("k-sqftd").className   = cls(h.pSqft);
-    el("k-avg").innerHTML     = '<span class="unit">$</span>'+Math.round(h.rev*1000/h.proj)+"k";
-    el("k-rsf").innerHTML     = '<span class="unit">$</span>'+Math.round(h.rev*1000/h.sqft).toLocaleString();
+    countTo("k-sqft", h.sqft*1000, fInt);
+    softSet("k-sqftd", sgn(h.pSqft)+"% on "+p, cls(h.pSqft));
+    countTo("k-avg", h.rev*1000/h.proj, function(v){ return "$"+Math.round(v)+"k"; });
+    countTo("k-rsf", h.rev*1000/h.sqft, fInts);
 
     var o = d.out;
-    el("k-ob").textContent   = o.ob.toFixed(1)+"m";
-    el("k-obd").textContent  = o.cover+"% of remaining budget";
-    el("k-pipe").textContent = o.pipe.toFixed(1)+"m";
-    el("k-fc").textContent   = o.fc.toFixed(1)+"m";
+    countTo("k-ob", o.ob, f1m);
+    softSet("k-obd", o.cover+"% of remaining budget", "delta up");
+    countTo("k-pipe", o.pipe, f1m);
+    countTo("k-fc", o.fc, f1m);
     var fv = (o.fc-o.budFc)/o.budFc*100;
-    el("k-fcd").textContent  = sgn(fv)+"% vs budget";
-    el("k-fcd").className    = cls(fv);
-    el("k-ye").textContent   = o.ye.toFixed(1)+"%";
-    el("k-yed").textContent  = "EBITDA $"+o.yeEb.toFixed(1)+"m";
+    softSet("k-fcd", sgn(fv)+"% vs budget", cls(fv));
+    countTo("k-ye", o.ye, f1p);
+    softSet("k-yed", "EBITDA $"+o.yeEb.toFixed(1)+"m", "delta up");
 
     var t="",i;
     for(i=0;i<d.proj.length;i++){
